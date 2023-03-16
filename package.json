@@ -19,7 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:build": "docker build -t gpt-api:latest .",
-    "docker:run": "docker run --rm -p 3000:3000 --name gpt-api gpt-api:latest"
+    "docker:run": "docker run --rm -p 3000:3000 --name gpt-api gpt-api:latest",
+    "compodoc": "npx compodoc -p tsconfig.json -s"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -37,6 +38,7 @@
     "rxjs": "^7.2.0"
   },
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.19",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
