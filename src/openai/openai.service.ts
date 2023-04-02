@@ -19,19 +19,25 @@ export class OpenaiService {
     const openaiApiKey = this.configService.get('OPENAI_API_KEY');
     // davinci-codex는 gpt-4 출시 이후 사용할 엔진이름임
     //const apiUrl = `https://api.openai.com/v1/engines/davinci-codex/completions`;
-    const apiUrl = `https://api.openai.com/v1/engines/davinci/completions`;
+    // const apiUrl = `https://api.openai.com/v1/engines/davinci/completions`;
+    const apiUrl = `https://api.openai.com/v1/chat/completions`;
 
     const headers = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${openaiApiKey}`,
     };
 
+    // const data = {
+    //   prompt: prompt,
+    //   max_tokens: 100,
+    //   n: 1,
+    //   stop: null,
+    //   temperature: 0.1,
+    // };
     const data = {
-      prompt: prompt,
-      max_tokens: 100,
-      n: 1,
-      stop: null,
-      temperature: 0.1,
+      model: 'gpt-3.5-turbo',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.7,
     };
     // const data = {
     //   prompt: `Please translate the following English text to Korean:\n\n"Hello, how are you?"\n\n번역:\n`,
@@ -44,8 +50,9 @@ export class OpenaiService {
     try {
       const response = await axios.post(apiUrl, data, { headers: headers });
       if (response.status === 200) {
-        const generatedText = response.data.choices[0].text;
-        return generatedText.trim();
+        const generatedText = response.data.choices[0].message;
+        console.log(generatedText)
+        return generatedText;
       } else {
         throw new Error(
           `OpenAI API request failed with status code ${response.status}`,
